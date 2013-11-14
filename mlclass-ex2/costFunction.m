@@ -20,13 +20,33 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+[m, n] = size(X);
 
+%XX = [ones(size(X,1),1),X];
 
+hypothesis = sigmoid( X * theta );
 
+J = 1/m * sum( -y .* log(hypothesis) .- (1 .- y) .* log(1 .- hypothesis) );
 
+%for j = 1:length(theta)
+%  grad(j) = 1/m * sum((hypothesis - y) .* X(:,j));
+%endfor
 
-
+grad = 1/m .* sum((repmat(hypothesis,1,3) .- repmat(y,1,3)) .* X);
 
 % =============================================================
 
 end
+
+%!test;
+%!  data = load('ex2data1.txt');
+%!  X = data(:, [1, 2]); y = data(:, 3);
+%!  XX = [ones(size(X,1),1),X];
+%!  [m, n] = size(X);
+%!  theta = zeros(n + 1, 1);
+%!  [cost,grad] = costFunction(theta, XX, y);
+%!  assert (sprintf('%1.3f', cost), '0.693');
+%!  assert (sprintf('%1.0f', grad(1)), '-0');
+%!  assert (sprintf('%1.0f', grad(2)), '-12');
+%!  assert (sprintf('%1.0f', grad(3)), '-11');
+
