@@ -15,13 +15,17 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
-
-
-
-
-
+prob = sigmoid(X * theta);
+p = prob >= 0.5;
 
 % =========================================================================
 
 
 end
+
+%!test;
+%!  data = load('ex2data1.txt');
+%!  X = data(:, [1, 2]); y = data(:, 3);
+%!  XX = [ones(size(X,1),1),X];
+%!  assert(sum(predict([-25.161272;0.206233;0.201470], XX)), 61)
+
