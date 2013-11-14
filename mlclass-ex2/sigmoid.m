@@ -9,18 +9,15 @@ g = zeros(size(z));
 % Instructions: Compute the sigmoid of each value of z (z can be a matrix,
 %               vector or scalar).
 
-
 g = 1./(1 .+ e.^-z)
-%g = e.^-z
-
 
 % =============================================================
 
 end
 
 %!assert (sigmoid(0), 0.5);
-%!assert (sigmoid(50) > 0.5);
-%!assert (sigmoid(-50) < 0.5);
+%!assert (sigmoid(5) > 0.5);
+%!assert (sigmoid(-5) < 0.5);
 
 %!test s = sigmoid([0,5,-5])
 %!  assert (s(1), 0.5);
