@@ -12,13 +12,15 @@ figure; hold on;
 %               examples and 'ko' for the negative examples.
 %
 
+positive = find(y==1);
+negative = find(y==0);
 
+plot(X(positive,1), X(positive,2), 'k+;Admitted;', 'MarkerSize', 6);
+plot(X(negative,1), X(negative,2), 'ko;Not Admitted;', 'MarkerFaceColor', 'r', 'MarkerSize', 6, 'LineWidth', 2);
 
-
-
-
-
-
+%xlabel('Exam 1 score')
+%ylabel('Exam 2 score')
+legend('boxon')
 
 % =========================================================================
 

@@ -10,9 +10,18 @@ g = zeros(size(z));
 %               vector or scalar).
 
 
-
+g = 1/(1 + e.^-z)
 
 
 % =============================================================
 
 end
+
+%!assert (sigmoid(0), 0.5);
+%!assert (sigmoid(50) > 0.5);
+%!assert (sigmoid(-50) < 0.5);
+
+
+%!assert (sigmoid(0), 0.5);
+%!assert (sigmoid(50) > 0.5);
+%!assert (sigmoid(-50) < 0.5);
