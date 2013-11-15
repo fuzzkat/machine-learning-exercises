@@ -32,7 +32,7 @@ J = 1/m * sum( -y .* log(hypothesis) .- (1 .- y) .* log(1 .- hypothesis) );
 %  grad(j) = 1/m * sum((hypothesis - y) .* X(:,j));
 %endfor
 
-grad = 1/m .* sum((repmat(hypothesis,1,3) .- repmat(y,1,3)) .* X);
+grad = 1/m .* sum((repmat(hypothesis,1,n) .- repmat(y,1,n)) .* X);
 
 % =============================================================
 
@@ -49,4 +49,7 @@ end
 %!  assert (sprintf('%1.0f', grad(1)), '-0');
 %!  assert (sprintf('%1.0f', grad(2)), '-12');
 %!  assert (sprintf('%1.0f', grad(3)), '-11');
-
+%!  sprintf('%1.3f', cost)
+%!  sprintf('%1.0f', grad(1))
+%!  sprintf('%1.0f', grad(2))
+%!  sprintf('%1.0f', grad(3))
