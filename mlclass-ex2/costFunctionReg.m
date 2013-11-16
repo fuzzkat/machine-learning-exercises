@@ -22,16 +22,16 @@ grad = zeros(size(theta));
 
 hypothesis = sigmoid( X * theta );
 
-regSum = sum(zeroFirstTerm(theta).^2);
-regularization = (lambda/(2*m)) * regSum;
+regTerm = zeroFirstTerm(theta).^2;
+regularization = (lambda/(2*m)) * sum(regTerm);
 
-costSum = sum( -y .* log(hypothesis) .- (1 .- y) .* log(1 .- hypothesis) );
+cost = -y .* log(hypothesis) .- (1 .- y) .* log(1 .- hypothesis);
 
-J = (1/m) * costSum + regularization;
+J = (1/m) * sum(cost) + regularization
 
-
-
-grad = (1/m) .* sum((repmat(hypothesis,1,n) .- repmat(y,1,n)) .* X);
+gradnorm = (lambda/m) .* zeroFirstTerm(theta);
+gradsum = sum((repmat(hypothesis,1,n) .- repmat(y,1,n)) .* X);
+grad = (1/m) .* gradsum' + gradnorm
 
 % =============================================================
 
@@ -39,26 +39,16 @@ end
 %!test;
 %!  data = load('ex2data1.txt');
 %!  X = data(:, [1, 2]); y = data(:, 3);
-%!  XX = [ones(size(X,1),1),X];
-%!  [m, n] = size(X);
-%!  theta = [0.5;0.4;0.6]
-%!  [cost,grad] = costFunctionReg(theta, XX, y, 0.6);
-%!  sprintf('%1.3f', cost)
-%!  sprintf('%1.3f', grad(1))
-%!  sprintf('%1.3f', grad(2))
-%!  sprintf('%1.3f', grad(3))
+%!  X = mapFeature(X(:,1), X(:,2));
+%!  theta = zeros(size(X, 2), 1);
+%!  [cost,grad] = costFunctionReg(theta, X, y, 1);
+
+
 
 function T = zeroFirstTerm(theta)
   T = theta;
   T(1) = 0;
 end
-%!assert (zeroFirstTerm([5;4;3;2;1]), [0;4;3;2;1]);
-
-function H = logisticHypothesis(X, theta)
-  H = sigmoid( X * theta )
-end
 %!test;
-%!  X = [1 2 3; 4 5 6; 7 8 9];
-%!  theta = [0.2; 0.3; 0.4];
-%!  assert (logisticHypothesis(X, theta), 1);
+%!  assert (zeroFirstTerm([5;4;3;2;1]), [0;4;3;2;1]);
 
