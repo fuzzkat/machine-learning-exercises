@@ -27,11 +27,11 @@ regularization = (lambda/(2*m)) * sum(regTerm);
 
 cost = -y .* log(hypothesis) .- (1 .- y) .* log(1 .- hypothesis);
 
-J = (1/m) * sum(cost) + regularization
+J = (1/m) * sum(cost) + regularization;
 
 gradnorm = (lambda/m) .* zeroFirstTerm(theta);
 gradsum = sum((repmat(hypothesis,1,n) .- repmat(y,1,n)) .* X);
-grad = (1/m) .* gradsum' + gradnorm
+grad = (1/m) .* gradsum' + gradnorm;
 
 % =============================================================
 
