@@ -49,18 +49,21 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+classes = 0:9;
 
-
-
-
-
-
-
-
-
+for class = classes
+  class
+end
 
 
 % =========================================================================
 
 
 end
+%!test;
+%!  X = [];
+%!  y = [1 0 0; 0 1 0; 0 0 1];
+%!  num_labels = 8;
+%!  lambda = [1,2,3,4];
+%!  allTheta = oneVsAll(X, y, num_labels, lambda)
+

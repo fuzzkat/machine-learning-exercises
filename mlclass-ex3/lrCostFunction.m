@@ -36,17 +36,41 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+[m, n] = size(X);
 
+hypothesis = sigmoid( X * theta );
 
+regTerm = zeroFirstTerm(theta).^2;
+regularization = (lambda/(2*m)) * sum(regTerm);
 
+cost = -y .* log(hypothesis) .- (1 .- y) .* log(1 .- hypothesis);
 
-
-
-
-
+J = (1/m) * sum(cost) + regularization;
 
 % =============================================================
 
-grad = grad(:);
+%grad = grad(:);
+
+gradnorm = (lambda/m) .* zeroFirstTerm(theta);
+gradsum = sum((repmat(hypothesis,1,n) .- repmat(y,1,n)) .* X);
+grad = (1/m) .* gradsum' + gradnorm;
 
 end
+
+%!test;
+%!  data = load('../mlclass-ex2/ex2data1.txt');
+%!  X = data(:, [1, 2]); y = data(:, 3);
+%!  X = mapFeature(X(:,1), X(:,2));
+%!  theta = zeros(size(X, 2), 1);
+%!  [cost,grad] = lrCostFunction(theta, X, y, 1);
+
+
+
+
+function T = zeroFirstTerm(theta)
+  T = theta;
+  T(1) = 0;
+end
+%!test;
+%!  assert (zeroFirstTerm([5;4;3;2;1]), [0;4;3;2;1]);
+
