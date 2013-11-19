@@ -30,10 +30,9 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+hypothesis = sigmoid( X * theta )
 
-
-
-
+max(sigmoid(all_theta * Z'),[],2)
 
 
 % =========================================================================
