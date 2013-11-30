@@ -61,24 +61,29 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+a1 = X;
+a1 = [ones(m, 1) a1];
 
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(m,1), a2];
 
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
 
+hypX = a3;
+hypX_size = size(hypX)
 
+yMat = [y==1, y==2, y==3, y==4, y==5, y==6, y==7, y==8, y==9, y==10];
+yMat_size = size(yMat)
 
+posDiff = -yMat .* log(hypX);
+negDiff = (1 - yMat) .* log(1 - hypX);
 
+costMatrix = posDiff - negDiff;
 
-
-
-
-
-
-
-
-
-
-
-
+sumOfSums = sum( sum( costMatrix ) );
+J = 1/m * sumOfSums;
 
 % -------------------------------------------------------------
 
