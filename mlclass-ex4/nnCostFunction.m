@@ -48,7 +48,7 @@ Theta2_grad = zeros(size(Theta2));
 %         Note: The vector y passed into the function is a vector of labels
 %               containing values from 1..K. You need to map this vector into a 
 %               binary vector of 1's and 0's to be used with the neural network
-%               cost function.
+%               cost function.https://www.google.co.uk/search?q=matrix+apostrophe&oq=matrix+apostrophe&aqs=chrome..69i57j0.11524j0j1&sourceid=chrome&ie=UTF-8
 %
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
@@ -68,18 +68,14 @@ z3 = a2 * Theta2'; a3 = sigmoid(z3); hypX = a3;
 labelMatcher = repmat(1:num_labels,m,1); yMatcher = repmat(y,1,num_labels);
 yMat = yMatcher == labelMatcher;
 
-posDiff = -yMat .* log(hypX);
-negDiff = (1 - yMat) .* log(1 - hypX);
+posDiff = -yMat .* log(hypX); negDiff = (1 - yMat) .* log(1 - hypX);
 costMatrix = posDiff - negDiff;
 
 sumOfSums = sum( sum( costMatrix ) );
 unregularizedJ = 1/m * sumOfSums;
 
-T1NoBias = Theta1;
-T1NoBias(:,1) = 0;
-
-T2NoBias = Theta2;
-T2NoBias(:,1) = 0;
+T1NoBias = Theta1(:,2:end);
+T2NoBias = Theta2(:,2:end);
 
 theta1Sum = sum( sum( T1NoBias .^ 2) );
 theta2Sum = sum( sum( T2NoBias .^ 2) );
@@ -88,7 +84,23 @@ regularizationTerm = lambda / (2 * m) * (theta1Sum + theta2Sum);
 J = unregularizedJ + regularizationTerm;
 
 % -------------------------------------------------------------
+for t = 1:m
+  x_t = X(t,:);
+  y_t = y(t);
 
+  y_k = y_t == 1:num_labels;
+
+  a3_t = a3(t,:);
+  delta3 = a3_t .- y_k  % 2
+
+  delta2 = ((Theta2' * delta3') .* inv(sigmoid(z2(t))))'  % 3
+
+  delta2NoBias = delta2(:,2:end)
+
+  deltaAcc = deltaAcc + delta3 * a2'     % 4
+
+  Theta1_grad =  % 5
+end
 % =========================================================================
 
 % Unroll gradients
