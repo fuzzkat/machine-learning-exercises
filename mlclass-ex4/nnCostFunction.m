@@ -114,10 +114,18 @@ for t = 1:m     % 1 to 5 for check
   Theta2_grad += (delta3' * a2_t);
 end
 
-Theta1_grad = Theta1_grad * (1/m);
-Theta2_grad = Theta2_grad * (1/m);
+Theta1ZeroFirstCol = Theta1;
+Theta1ZeroFirstCol(:,1) = 0;
+
+Theta2ZeroFirstCol = Theta2;
+Theta2ZeroFirstCol(:,1) = 0;
+
+Theta1_grad = Theta1_grad * (1/m) + Theta1ZeroFirstCol * (lambda/m);
+Theta2_grad = Theta2_grad * (1/m) + Theta2ZeroFirstCol * (lambda/m);
 
 % =========================================================================
+
+
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
