@@ -22,13 +22,30 @@ sigma = 0.3;
 %  Note: You can compute the prediction error using 
 %        mean(double(predictions ~= yval))
 %
+bestScore = 99999;
+candidateValues = [0.01 0.03 0.1 0.3 1 3 10 30];
+for i = 1:length(candidateValues)
+  candC = candidateValues(i)
 
+  for j = 1:length(candidateValues)
+    candSigma = candidateValues(j)
 
+    model = svmTrain(X, y, candC, @(x1, x2) gaussianKernel(x1, x2, candSigma), 1e-3, 20);
 
+    predictions = svmPredict(model, Xval);
+    score = mean(double(predictions ~= yval))
 
-
-
+    if(score < bestScore)
+      bestScore = score;
+      C = candC;
+      sigma = candSigma;
+    endif
+  end
+end
 
 % =========================================================================
 
 end
+
+%!test
+%!  dataset3Params([1,2],[1,2],[1,2],[1,2])
