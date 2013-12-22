@@ -26,15 +26,28 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+for k = 1:K
 
+  pointsInCentroidk = X
 
+%  (1/K) * sum(  )
 
-
-
+end
 
 
 % =============================================================
 
 
 end
+
+
+%!test
+%!  load('ex7data2.mat');
+%!  K = 3; % 3 Centroids
+%!  initial_centroids = [3 3; 6 2; 8 5];
+%!  idx = findClosestCentroids(X, initial_centroids);
+%!  centroids = computeCentroids(X, idx, K);
+%!  assert(centroids(1,:), [ 2.428301 3.157924 ])
+%!  assert(centroids(2,:), [ 5.813503 2.633656 ])
+%!  assert(centroids(3,:), [ 7.119387 3.616684 ])
 
