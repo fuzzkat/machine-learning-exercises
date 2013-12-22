@@ -21,13 +21,25 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+for i = 1:(size(X,1))
+  idx(i) = findClosestCentroid(X(i,:), centroids, K);
+end
 
 % =============================================================
 
 end
+
+function cidx = findClosestCentroid(x, centroids, K)
+  xarray = repmat(x,K,1);
+  distances = xarray - centroids;
+  norms = sqrt(sum(distances.^2,2));
+  [val,cidx] = min(norms.^2);
+end
+
+%!test
+%!  load('ex7data2.mat');
+%!  initial_centroids = [3 3; 6 2; 8 5];
+%!  idx = findClosestCentroids(X, initial_centroids);
+%!  assert(idx(1:3), [1;3;2])
+
 
