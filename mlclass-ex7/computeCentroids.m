@@ -16,7 +16,6 @@ function centroids = computeCentroids(X, idx, K)
 % You need to return the following variables correctly.
 centroids = zeros(K, n);
 
-
 % ====================== YOUR CODE HERE ======================
 % Instructions: Go over every centroid and compute mean of all points that
 %               belong to it. Concretely, the row vector centroids(i, :)
@@ -24,16 +23,11 @@ centroids = zeros(K, n);
 %               centroid i.
 %
 % Note: You can use a for-loop over the centroids to compute this.
-%
 
 for k = 1:K
-
-  pointsInCentroidk = X
-
-%  (1/K) * sum(  )
-
+  XforK = X(idx==k,:);
+  centroids(k,:) = (1/size(XforK,1)) * sum(XforK);
 end
-
 
 % =============================================================
 
@@ -47,7 +41,7 @@ end
 %!  initial_centroids = [3 3; 6 2; 8 5];
 %!  idx = findClosestCentroids(X, initial_centroids);
 %!  centroids = computeCentroids(X, idx, K);
-%!  assert(centroids(1,:), [ 2.428301 3.157924 ])
-%!  assert(centroids(2,:), [ 5.813503 2.633656 ])
-%!  assert(centroids(3,:), [ 7.119387 3.616684 ])
+%!  assert(centroids(1,:), [ 2.428301 3.157924 ], 0.000001)
+%!  assert(centroids(2,:), [ 5.813503 2.633656 ], 0.000001)
+%!  assert(centroids(3,:), [ 7.119387 3.616684 ], 0.000001)
 
