@@ -39,9 +39,17 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
+errors = ((X * Theta') - Y) .* R;
+squared_errors = errors.^2;
+J = 0.5 * sum(sum(squared_errors));
 
-errors = ((X * Theta') - Y).^2;
-J = 0.5 * sum(sum(errors .* R));
+X_grad = errors * Theta;
+Theta_grad = errors' * X;
+
+% Regularize
+J = J + (lambda/2) * sum(sum(Theta.^2)) + (lambda/2) * sum(sum(X.^2));
+X_grad = X_grad + lambda * X;
+Theta_grad = Theta_grad + lambda * Theta;
 
 % =============================================================
 
@@ -59,4 +67,24 @@ end
 %!  R = R(1:num_movies, 1:num_users);
 %!  J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, num_features, 0);
 %!  assert(J, 22.22, 0.01)
+
+%!test
+%!  lambda = 0;
+%!  X_t = rand(4, 3);
+%!  Theta_t = rand(5, 3);
+%!  Y = X_t * Theta_t';
+%!  Y(rand(size(Y)) > 0.5) = 0;
+%!  R = zeros(size(Y));
+%!  R(Y ~= 0) = 1;
+%!  X = randn(size(X_t));
+%!  Theta = randn(size(Theta_t));
+%!  num_users = size(Y, 2);
+%!  num_movies = size(Y, 1);
+%!  num_features = size(Theta_t, 2);
+%!  numgrad = computeNumericalGradient( @(t) cofiCostFunc(t, Y, R, num_users, num_movies, num_features, lambda), [X(:); Theta(:)]);
+%!  [cost, grad] = cofiCostFunc([X(:); Theta(:)],  Y, R, num_users, num_movies, num_features, lambda);
+%!  diff = norm(numgrad-grad)/norm(numgrad+grad);
+%  disp([numgrad grad]);
+%!  assert(diff, 0, 1e-9);
+
 
