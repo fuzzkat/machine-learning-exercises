@@ -14,7 +14,7 @@ J = 0;
 %               You should set J to the cost.
 
 costs = X * theta - y
-J = (1/(2*m)) * (sum(costs .^2))
+J = sum(costs .^2) / (2*m)
 
 % =========================================================================
 
